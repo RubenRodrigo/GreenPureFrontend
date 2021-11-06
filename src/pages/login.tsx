@@ -88,7 +88,7 @@ const Login = () => {
           </div>
           <div className="pb-4 w-full">
             <button
-              onClick={() => signIn("facebook")}
+              onClick={() => signIn("facebook", { callbackUrl: process.env.NEXT_PUBLIC_URL + '/dashboard' })}
               className="border rounded-md w-full p-3 bg-blue-800 text-white"
             >
               <div className="relative">

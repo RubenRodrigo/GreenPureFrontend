@@ -5,14 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_URL_API
 
-interface UserValues {
-  access_token: string
-  refresh_token: string
-  scope: string
-  expires_in: number
-  token_type: string
-}
-
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
