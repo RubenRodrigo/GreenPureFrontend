@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
-import CredentialProvider from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_URL_API
 
@@ -13,8 +13,19 @@ interface LoginValues {
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
-    CredentialProvider({
-      async authorize(credentials: LoginValues) {
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. 'Sign in with...')
+      name: 'Credentials',
+      // The credentials is used to generate a suitable form on the sign in page.
+      // You can specify whatever fields you are expecting to be submitted.
+      // e.g. domain, username, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+
+      async authorize(credentials: any) {
         try {
           const user = await axios.post(API_ENDPOINT + '/auth/token',
             {
@@ -30,6 +41,7 @@ export default NextAuth({
                 'Content-Type': 'application/json'
               }
             })
+          console.log(user.data);
 
           console.log('ACCESS TOKEN ----> ' + JSON.stringify(user.data.access_token, null, 2));
 
@@ -68,6 +80,7 @@ export default NextAuth({
 
       if (account !== undefined) {
         if (account?.provider == 'facebook') {
+          console.log('Credentials', token);
           const res = await axios
             .post(API_ENDPOINT + '/auth/convert-token', {
               token: account.access_token,
@@ -107,5 +120,20 @@ export default NextAuth({
 
       return session
     },
+  },
+  pages: {
+    signIn: '/login'
+  },
+  jwt: {
+    signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
+    // You can also specify a public key for verification if using public/private key (but private only is fine)
+    // verificationKey: process.env.JWT_SIGNING_PUBLIC_KEY,
+
+    // If you want to use some key format other than HS512 you can specify custom options to use
+    // when verifying (note: verificationOptions should include a value for maxTokenAge as well).
+    // verificationOptions = {
+    //   maxTokenAge: `${maxAge}s`, // e.g. `${30 * 24 * 60 * 60}s` = 30 days
+    //   algorithms: ['HS512']
+    // },
   }
 })
