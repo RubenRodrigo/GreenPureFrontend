@@ -14,3 +14,54 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.illustration-bg{
+  position: absolute;
+  left: 76.7%;
+  right: -20.73%;
+  top: -18.92%;
+  bottom: 21.76%;
+
+  background: linear-gradient(180deg, rgba(1, 153, 102, 0.7) 0%, rgba(9, 80, 115, 0) 100%);
+  border-radius: 0px 0px 59px 100px;
+  transform: rotate(26.32deg);
+}
+
+.ellipse-1{
+  position: absolute;
+  width: 123px;
+  height: 123px;
+  left: 50%;
+  top: 13%;
+
+
+  background: radial-gradient(70% 70% at 70% 64.8%, rgba(1, 153, 102, 0.6) 0%, rgba(255, 255, 255, 0.5) 100%);
+}
+
+.ellipse-2{
+  position: absolute;
+  width: 39px;
+  height: 39px;
+  left: 35%;
+  top: 70%;
+
+  background: radial-gradient(70% 70% at 70% 64.8%, rgba(1, 153, 102, 0.6) 0%, rgba(255, 255, 255, 0.5) 100%);
+}
+.ellipse-3{
+  position: absolute;
+  width: 125px;
+  height: 125px;
+  left: 0px;
+  bottom: 0px;
+  
+  background: radial-gradient(rgba(1, 153, 102, 0.6) 0%, rgba(255, 255, 255, 0.5) 100%);
+}
+.ellipse-4{
+  position: absolute;
+  width: 125px;
+  height: 125px;
+  right: 0px;
+  bottom: 0px;
+  
+  background: radial-gradient(70% 70% at 70% 64.8%, rgba(1, 153, 102, 0.6) 0%, rgba(255, 255, 255, 0.5) 100%);
+}

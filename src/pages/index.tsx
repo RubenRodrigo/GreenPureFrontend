@@ -1,9 +1,38 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
+import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
+import { getSession, signOut } from 'next-auth/react'
+import axios from 'axios'
+
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+
+type Keys = {
+  CLIENT_ID: string
+  CLIENT_SECRET: string
+}
+
+const Home: NextPage = ({ CLIENT_ID, CLIENT_SECRET }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const handleSignOut = async () => {
+    const session = await getSession()
+    if (session) {
+      const res = await axios({
+        method: 'post',
+        url: process.env.NEXT_PUBLIC_URL_API + '/auth/revoke-token',
+        data: {
+          client_secret: CLIENT_SECRET,
+          client_id: CLIENT_ID,
+          token: session.refreshToken
+        }
+      })
+    }
+
+    const result = await signOut({ redirect: false })
+  }
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -51,6 +80,32 @@ const Home: NextPage = () => {
             </p>
           </a>
         </div>
+        <div>
+          <button
+            onClick={handleSignOut}
+            className="rounded-md border px-4 py-2"
+          >
+            Cerrar Sesión
+          </button>
+          <Link
+            href="/login"
+          >
+            <a
+              className="rounded-md border px-4 py-2"
+            >
+              Iniciar Sesion
+            </a>
+          </Link>
+          <Link
+            href="/signup"
+          >
+            <a
+              className="rounded-md border px-4 py-2"
+            >
+              Registrar Usuario
+            </a>
+          </Link>
+        </div>
       </main>
 
       <footer className={styles.footer}>
@@ -67,6 +122,19 @@ const Home: NextPage = () => {
       </footer>
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const CLIENT_SECRET = process.env.CLIENT_SECRET
+  const CLIENT_ID = process.env.CLIENT_ID
+  const contextKeys: Keys = {
+    CLIENT_SECRET: CLIENT_SECRET || '',
+    CLIENT_ID: CLIENT_ID || ''
+  }
+
+  return {
+    props: contextKeys,
+  }
 }
 
 export default Home
