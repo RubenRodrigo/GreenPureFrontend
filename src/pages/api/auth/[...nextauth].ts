@@ -5,9 +5,12 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_URL_API
 
-interface LoginValues {
-  email: string
-  password: string
+interface UserValues {
+  access_token: string
+  refresh_token: string
+  scope: string
+  expires_in: number
+  token_type: string
 }
 
 export default NextAuth({
@@ -93,12 +96,13 @@ export default NextAuth({
           token.refreshToken = res.data.refresh_token
         }
         if (account?.provider == 'credentials') {
+          const UserCredentials: any = user.data
           console.log('Credentials', token);
-          token.accessToken = user.data.access_token
-          token.refreshToken = user.data.refresh_token
-          token.scope = user.data.scope
-          token.expires_in = user.data.expires_in
-          token.token_type = user.data.token_type
+          token.accessToken = UserCredentials.access_token
+          token.refreshToken = UserCredentials.refresh_token
+          token.scope = UserCredentials.scope
+          token.expires_in = UserCredentials.expires_in
+          token.token_type = UserCredentials.token_type
         }
       }
 
