@@ -8,7 +8,7 @@ import { ImQrcode } from 'react-icons/im'
 import { MdOutlinePowerSettingsNew } from 'react-icons/md'
 import { BiDevices, BiHistory } from 'react-icons/bi'
 import { SidebarLink } from '../Links/SidebarLink'
-import { BsPersonCircle } from 'react-icons/bs'
+import { BsPersonCircle, BsPersonFill } from 'react-icons/bs'
 
 export const Sidebar = () => {
 
@@ -61,49 +61,72 @@ export const Sidebar = () => {
 						</div>
 					</div>
 					<div className="flex-1">
-						<h3 className="pl-10 py-4 font-semibold">Generales</h3>
-						<ul>
-							<li>
-								<SidebarLink
-									href="/dashboard"
-									exact
-									className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
-								>
-									<div className="self-center">
-										<MdOutlinePowerSettingsNew className="text-2xl" />
-									</div>
-									<span className="self-center">
-										Dashboard
-									</span>
-								</SidebarLink>
-							</li>
-							<li>
-								<SidebarLink
-									href="/devices"
-									exact
-									className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
-								>
-									<div className="self-center">
-										<BiDevices className="text-2xl" />
-									</div>
-									<span className="self-center">
-										Dispositivos
-									</span>
-								</SidebarLink>
-							</li>
-							<SidebarLink
-								href="/Historial"
-								exact
-								className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
-							>
-								<div className="self-center">
-									<BiHistory className="text-2xl" />
-								</div>
-								<span className="self-center">
-									Historial de Mediciones
-								</span>
-							</SidebarLink>
-						</ul>
+						<div>
+							<h3 className="pl-10 py-4 font-semibold">Generales</h3>
+							<ul>
+								<li>
+									<SidebarLink
+										href="/dashboard"
+										exact
+										className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
+									>
+										<div className="self-center">
+											<MdOutlinePowerSettingsNew className="text-2xl" />
+										</div>
+										<span className="self-center">
+											Dashboard
+										</span>
+									</SidebarLink>
+								</li>
+								<li>
+									<SidebarLink
+										href="/devices"
+										exact
+										className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
+									>
+										<div className="self-center">
+											<BiDevices className="text-2xl" />
+										</div>
+										<span className="self-center">
+											Dispositivos
+										</span>
+									</SidebarLink>
+								</li>
+								<li>
+									<SidebarLink
+										href="/Historial"
+										exact
+										className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
+									>
+										<div className="self-center">
+											<BiHistory className="text-2xl" />
+										</div>
+										<span className="self-center">
+											Historial de Mediciones
+										</span>
+									</SidebarLink>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<h3 className="pl-10 py-4 font-semibold">Cuenta</h3>
+							<ul>
+								<li>
+									<SidebarLink
+										href="/profile"
+										exact
+										className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
+									>
+										<div className="self-center">
+											<BsPersonFill className="text-2xl" />
+										</div>
+										<span className="self-center">
+											Perfil
+										</span>
+									</SidebarLink>
+								</li>
+							</ul>
+						</div>
 					</div>
 					<div className="w-full px-4 py-8 flex flex-col gap-10 flex-initial">
 						<div className="flex justify-center">
@@ -113,7 +136,7 @@ export const Sidebar = () => {
 							<p className="text-center">Nuevo Dispositivo</p>
 							<p className="text-sm text-gray-500 text-center">Puedes añadir nuevos dispositivos</p>
 						</div>
-						<button className="text-white bg-textGreen rounded-lg p-3 shadow-2xl font-semibold hover:bg-green-700">Añadir Dispositivo</button>
+						<button className="text-white bg-textGreen rounded-lg p-3 shadow-greenShadow font-semibold hover:bg-green-700">Añadir Dispositivo</button>
 					</div>
 				</div>
 			</div>

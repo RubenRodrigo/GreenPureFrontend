@@ -6,7 +6,6 @@ import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
-import Layout1 from '../components/Layout1'
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode

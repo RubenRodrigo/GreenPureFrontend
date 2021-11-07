@@ -124,7 +124,7 @@ export default NextAuth({
           })
         session.user = { ...session.user, ...user.data }
       } catch (e) {
-        console.log(e);
+        console.log("error");
       }
 
       if (token.error) {
