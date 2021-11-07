@@ -75,7 +75,6 @@ export default NextAuth({
 
       if (account !== undefined) {
         if (account?.provider == 'facebook') {
-          console.log('Credentials', token);
           const res = await axios
             .post(API_ENDPOINT + '/auth/convert-token', {
               token: account.access_token,
@@ -84,12 +83,13 @@ export default NextAuth({
               client_secret: process.env.CLIENT_SECRET,
               client_id: process.env.CLIENT_ID
             })
+          token.provider = account?.provider
           token.accessToken = res.data.access_token
           token.refreshToken = res.data.refresh_token
         }
         if (account?.provider == 'credentials') {
           const UserCredentials: any = user.data
-          console.log('Credentials', token);
+          token.provider = account?.provider
           token.accessToken = UserCredentials.access_token
           token.refreshToken = UserCredentials.refresh_token
           token.scope = UserCredentials.scope
@@ -109,6 +109,23 @@ export default NextAuth({
       // Store Access Token to Session
       session.refreshToken = token.refreshToken
       session.accessToken = token.accessToken
+      session.provider = token.provider
+
+      try {
+        const user = await axios.get(API_ENDPOINT + '/user',
+          {
+            headers: {
+              accept: '*/*',
+              'Content-Type': 'application/json',
+              Authorization: session
+                ? 'Bearer ' + session.accessToken
+                : null,
+            }
+          })
+        session.user = { ...session.user, ...user.data }
+      } catch (e) {
+        console.log(e);
+      }
 
       if (token.error) {
         session.error = token.error

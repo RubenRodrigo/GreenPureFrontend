@@ -1,17 +1,17 @@
-import { ReactElement } from "react";
-import Layout1 from "@/components/Layout1";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
+import Layout1 from '@/components/Layout1';
+import { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/react';
+import React, { ReactElement } from 'react'
 
-const Dashboard = () => {
+const Devices = () => {
 	return (
 		<div>
-			Dashboard
+			devices
 		</div>
 	)
 }
 
-Dashboard.getLayout = function getLayout(page: ReactElement) {
+Devices.getLayout = function getLayout(page: ReactElement) {
 	return (
 		<Layout1>
 			{page}
@@ -36,4 +36,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	}
 }
 
-export default Dashboard
+export default Devices

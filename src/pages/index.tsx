@@ -14,23 +14,8 @@ type Keys = {
   CLIENT_SECRET: string
 }
 
-const Home: NextPage = ({ CLIENT_ID, CLIENT_SECRET }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const handleSignOut = async () => {
-    const session = await getSession()
-    if (session) {
-      const res = await axios({
-        method: 'post',
-        url: process.env.NEXT_PUBLIC_URL_API + '/auth/revoke-token',
-        data: {
-          client_secret: CLIENT_SECRET,
-          client_id: CLIENT_ID,
-          token: session.refreshToken
-        }
-      })
-    }
+const Home: NextPage = () => {
 
-    const result = await signOut({ redirect: false })
-  }
 
 
   return (
@@ -81,12 +66,15 @@ const Home: NextPage = ({ CLIENT_ID, CLIENT_SECRET }: InferGetStaticPropsType<ty
           </a>
         </div>
         <div>
-          <button
-            onClick={handleSignOut}
-            className="rounded-md border px-4 py-2"
+          <Link
+            href="/dashboard"
           >
-            Cerrar Sesión
-          </button>
+            <a
+              className="rounded-md border px-4 py-2"
+            >
+              Dashboard
+            </a>
+          </Link>
           <Link
             href="/login"
           >
@@ -122,19 +110,6 @@ const Home: NextPage = ({ CLIENT_ID, CLIENT_SECRET }: InferGetStaticPropsType<ty
       </footer>
     </div>
   )
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const CLIENT_SECRET = process.env.CLIENT_SECRET
-  const CLIENT_ID = process.env.CLIENT_ID
-  const contextKeys: Keys = {
-    CLIENT_SECRET: CLIENT_SECRET || '',
-    CLIENT_ID: CLIENT_ID || ''
-  }
-
-  return {
-    props: contextKeys,
-  }
 }
 
 export default Home
