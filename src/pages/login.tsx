@@ -18,8 +18,8 @@ const Login = () => {
 
   const [loginError, setLoginError] = useState('')
   const [formValues, setFormValues] = useState<LoginValues>({
-    email: "",
-    password: ""
+    email: "user1@gmail.com",
+    password: "administrador_1"
   })
 
   type HandleInputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
@@ -59,6 +59,7 @@ const Login = () => {
                 type="email"
                 className="border w-full rounded-md p-3"
                 placeholder="Correo Electronico"
+                value={formValues.email}
                 onChange={handleChange}
               />
             </div>
@@ -68,6 +69,7 @@ const Login = () => {
                 type="password"
                 className="border w-full rounded-md p-3"
                 placeholder="Contraseña"
+                value={formValues.password}
                 onChange={handleChange}
               />
             </div>
