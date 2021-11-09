@@ -24,7 +24,6 @@ export const SearchBar = () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [ref]);
-
 	return (
 		<div
 			className="w-full"

@@ -11,7 +11,7 @@ export interface Device {
 
 export interface Averages {
 	quality__avg: number;
-	himidity__avg: number;
+	humidity__avg: number;
 	temperature__avg: number;
 	warm__avg: number;
 	concentration__avg: number;

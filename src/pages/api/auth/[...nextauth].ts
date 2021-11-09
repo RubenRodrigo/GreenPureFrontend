@@ -182,6 +182,8 @@ export default NextAuth({
         session.error = token.error
       }
 
+      console.log(session);
+
       return session
     },
   },

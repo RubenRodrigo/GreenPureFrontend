@@ -1,6 +1,14 @@
 import { Line } from 'react-chartjs-2';
+import { Device } from 'src/interfaces/Device';
 
-export const LinearChart = () => {
+// TODO: LineChart -> Eduardo
+interface Props {
+	devices: Device[]
+	device: Device
+	selectDevice: (newDevice: Device) => void
+}
+
+export const LinearChart = ({ devices, device, selectDevice }: Props) => {
 	const data = {
 		labels: ['1', '2', '3', '4', '5', '6', '7'],
 		datasets: [

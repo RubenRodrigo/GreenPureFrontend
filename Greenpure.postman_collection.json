@@ -1,0 +1,491 @@
+{
+	"info": {
+		"_postman_id": "4ecf6ac1-8cca-4e70-a408-fe056359ce29",
+		"name": "Greenpure",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Sign in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"user1@gmail.com\",\n    \"password\":\"administrador_1\",\n    \"grant_type\": \"password\",\n    \"client_secret\": \"TR1WLNzk9sCPIDhVufE7L6vS2Yh5UTmYvARgpsA4bqynXuDDWmZYW3DNS5y3BfHSJz4yHa2jLkgnxmjyMXZE1yzlEs13JEYflBBGihqtxqbpCJXc3Mp32aQNrYVNWnAl\",\n    \"client_id\": \"yzrBA0gUiK0VyE5zvgCj3avXObfYIaNGSBDt7FlL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/token/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign out",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \n    \"client_secret\": \"TR1WLNzk9sCPIDhVufE7L6vS2Yh5UTmYvARgpsA4bqynXuDDWmZYW3DNS5y3BfHSJz4yHa2jLkgnxmjyMXZE1yzlEs13JEYflBBGihqtxqbpCJXc3Mp32aQNrYVNWnAl\",\n    \"client_id\": \"yzrBA0gUiK0VyE5zvgCj3avXObfYIaNGSBDt7FlL\",\n    \"token\": \"P5On3PVrp6fKqkvjKBKJmRnovAax0B\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/revoke-token",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"revoke-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"grant_type\": \"refresh_token\",\n    \"client_id\": \"yzrBA0gUiK0VyE5zvgCj3avXObfYIaNGSBDt7FlL\",\n    \"client_secret\": \"TR1WLNzk9sCPIDhVufE7L6vS2Yh5UTmYvARgpsA4bqynXuDDWmZYW3DNS5y3BfHSJz4yHa2jLkgnxmjyMXZE1yzlEs13JEYflBBGihqtxqbpCJXc3Mp32aQNrYVNWnAl\",\n    \"refresh_token\": \"eLW5esPkOpRjQHLuI1gc7494ouUXn1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/token/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin1@gmail.com\",\n    \"first_name\": \"Admin\",\n    \"last_name\": \"Admin admin\",\n    \"password\": \"administrador_1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/create/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke all tokens",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"client_secret\": \"TR1WLNzk9sCPIDhVufE7L6vS2Yh5UTmYvARgpsA4bqynXuDDWmZYW3DNS5y3BfHSJz4yHa2jLkgnxmjyMXZE1yzlEs13JEYflBBGihqtxqbpCJXc3Mp32aQNrYVNWnAl\",\n    \"client_id\": \"yzrBA0gUiK0VyE5zvgCj3avXObfYIaNGSBDt7FlL\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/invalidate-sessions",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"invalidate-sessions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"country\": \"Peru\",\n    \"city\": \"Arequipa\",\n    \"district\": \"Cayma\",    \n    \"device_id\": 3,\n    \"latitude\": 75.1515000,\n    \"longitude\": 75.1515000,    \n    \"humidity\": 1,\n    \"temperature\": 0,\n    \"warm\": 1,\n    \"concentration\": 0,\n    \"smoke_sensor\": true,\n    \"methane_sensor\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/data/?device=3&filter_by=24",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"data",
+								""
+							],
+							"query": [
+								{
+									"key": "device",
+									"value": "3"
+								},
+								{
+									"key": "filter_by",
+									"value": "24"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \n    \"country\": \"Peru\",\n    \"city\": \"Arequipa\",\n    \"district\": \"Cayma\",    \n    \"device_id\": 3,\n    \"latitude\": 75.1515000,\n    \"longitude\": 75.1515000,    \n    \"humidity\": 10,\n    \"temperature\": 0,\n    \"warm\": 10,\n    \"concentration\": 0,\n    \"smoke_sensor\": false,\n    \"methane_sensor\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/data/?device=3&filter_by=720",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"data",
+								""
+							],
+							"query": [
+								{
+									"key": "device",
+									"value": "3"
+								},
+								{
+									"key": "filter_by",
+									"value": "720"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Device",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/device?filter_by=720",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"device"
+							],
+							"query": [
+								{
+									"key": "filter_by",
+									"value": "720"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"device\": \"fasfasf21421\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/device/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"device",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/device/3?filter_by=720",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"device",
+								"3"
+							],
+							"query": [
+								{
+									"key": "filter_by",
+									"value": "720"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate Device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/device/activate/12F14f",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"device",
+								"activate",
+								"12F14f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resume Devices",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/device/resume?filter_by=720",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"device",
+								"resume"
+							],
+							"query": [
+								{
+									"key": "filter_by",
+									"value": "720"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
