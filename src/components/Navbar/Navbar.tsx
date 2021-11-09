@@ -1,21 +1,19 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import { getSession, signOut, useSession } from 'next-auth/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment } from 'react'
 
 import { Popover, Transition } from '@headlessui/react'
 import axios from 'axios'
-import { BsPersonCircle, BsPersonFill, BsSearch } from 'react-icons/bs'
-import { MdDeviceThermostat, MdHome } from 'react-icons/md';
+import { BsPersonCircle, BsPersonFill } from 'react-icons/bs'
+import { MdHome } from 'react-icons/md';
+import { SearchBar } from './SearchBar';
 
 export const Navbar = () => {
 	const router = useRouter()
-	const ref = useRef(null)
-	const [searchButton, setSearchButton] = useState(false)
 
 	const { data: session, status } = useSession()
 	const handleSignOut = async () => {
-		const session = await getSession()
 		if (session) {
 			const res = await axios({
 				method: 'post',
@@ -32,79 +30,15 @@ export const Navbar = () => {
 		router.push(data.url)
 	}
 
-	useEffect(() => {
-		/**
-		 * Alert if clicked on outside of element
-		 */
-		function handleClickOutside(event) {
-			if (ref.current && !ref.current.contains(event.target)) {
-				setSearchButton(false)
-			}
-		}
 
-		// Bind the event listener
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => {
-			// Unbind the event listener on clean up
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, [ref]);
 
 	return (
 		<div className="pl-72 fixed top-0 w-full bg-white bg-opacity-60">
 			<div className="flex p-4 relative">
 				<div
 					className="flex-1"
-					ref={ref}
-					onClick={() => setSearchButton(true)}
 				>
-					<button
-						className={`px-4 py-2 w-full h-full ${searchButton ? 'invisible' : 'visible'}`}
-					>
-						<div className="flex gap-5 text-gray-500">
-							<div className={`flex-initial self-center p-3 rounded-full hover:bg-gray-100 ${searchButton && 'bg-gray-100'}`}>
-								<BsSearch className="text-xl" />
-							</div>
-							<div className="flex-1 text-left self-center">
-								<span className="text-lg">
-									Dispositivos
-								</span>
-							</div>
-						</div>
-					</button>
-					<div className={`absolute left-0 top-0 right-0 bg-white z-10 bg-opacity-80 p-4 shadow-lg ${searchButton ? 'visible' : 'invisible'}`}>
-						<div className="px-4 py-2">
-							<div className="flex gap-5 text-gray-500">
-								<div className={`flex-initial self-center p-3 rounded-full`}>
-									<BsSearch className="text-xl" />
-								</div>
-								<div className="flex-1 text-left self-center w-full">
-									<input className="text-lg w-full bg-transparent outline-none" type="text" placeholder="Dispositivos" />
-								</div>
-								<div className="flex-initial self-center pr-3">
-									<button className="text-white shadow-greenShadow bg-textGreen rounded-lg px-4 py-2 font-semibold hover:bg-green-700">Buscar</button>
-								</div>
-							</div>
-						</div>
-						<div className="p-8 flex flex-col gap-5">
-							<div className="w-full px-4 py-1 border-l-8 border-textGreen flex bg-gradient-to-r from-green-50 to-white">
-								<MdDeviceThermostat className="block text-2xl self-center" />
-								<p className="font-medium text-lg self-center">Dispositivo 1 - 49%</p>
-							</div>
-							<div className="w-full px-4 py-1 border-l-8 border-yellow-500 flex bg-gradient-to-r from-yellow-50 to-white">
-								<MdDeviceThermostat className="block text-2xl self-center" />
-								<p className="font-medium text-lg self-center">Dispositivo 2 - 49%</p>
-							</div>
-							<div className="w-full px-4 py-1 border-l-8 border-textGreen flex bg-gradient-to-r from-green-50 to-white">
-								<MdDeviceThermostat className="block text-2xl self-center" />
-								<p className="font-medium text-lg self-center">Dispositivo 3 - 49%</p>
-							</div>
-							<div className="w-full px-4 py-1 border-l-8 border-yellow-500 flex bg-gradient-to-r from-yellow-50 to-white">
-								<MdDeviceThermostat className="block text-2xl self-center" />
-								<p className="font-medium text-lg self-center">Dispositivo 3 - 49%</p>
-							</div>
-						</div>
-					</div>
+					<SearchBar />
 				</div>
 				<div className="flex-initial relative ">
 					<Popover className="relative">
@@ -135,7 +69,7 @@ export const Navbar = () => {
 									leaveFrom="opacity-100 translate-y-0"
 									leaveTo="opacity-0 translate-y-1"
 								>
-									<Popover.Panel className="absolute z-10 w-auto right-0">
+									<Popover.Panel className="absolute z-10 w-auto right-0 bg-white">
 										<div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
 											<div className="p-5 border-b">
 												{

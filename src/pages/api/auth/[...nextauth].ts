@@ -2,8 +2,42 @@ import axios, { AxiosError } from "axios";
 import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { axiosInstanceServerSide } from "src/helpers/axiosInstance";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_URL_API
+
+async function refreshAccessToken(token: any) {
+  // console.log("10 - REFRESH", token);
+  try {
+
+    const now = Math.ceil(Date.now() / 1000);
+    const response = await axiosInstanceServerSide().post('/auth/token/',
+      {
+        grant_type: "refresh_token",
+        client_secret: process.env.CLIENT_SECRET,
+        client_id: process.env.CLIENT_ID,
+        refresh_token: token.refreshToken
+      }
+    );
+
+    const refreshedTokens = response.data
+    if (response.status !== 200) { throw refreshedTokens }
+
+    return {
+      ...token,
+      accessToken: refreshedTokens.access_token,
+      token_expire: refreshedTokens.expires_in + now,
+      token_type: refreshedTokens.token_type,
+      scope: refreshedTokens.scope,
+      refreshToken: refreshedTokens.refresh_token
+    }
+  } catch (error) {
+    console.log("REFRESH TOKEN FAILED", error.response.data)
+    return {
+      ...token, error: "RefreshAccessTokenError",
+    }
+  }
+}
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -38,7 +72,7 @@ export default NextAuth({
             })
           console.log(user.data);
 
-          console.log('ACCESS TOKEN ----> ' + JSON.stringify(user.data.access_token, null, 2));
+          console.log('CREDENTIALS ACCESS TOKEN ----> ' + JSON.stringify(user.data.access_token, null, 2));
 
           if (user) {
             return {
@@ -49,10 +83,15 @@ export default NextAuth({
 
           return null
 
-        } catch (e) {
-          // const errorMessage = e.response.data.detail
+        } catch (error) {
+          if (axios.isAxiosError(error)) {
+            const errorMessage = error.response.data.detail
+            throw new Error(errorMessage + '&email=' + credentials.email)
+            // const errorMessage = e.response.data.detail
+          } else {
+            throw new Error('Error inesperado')
+          }
           // Redirecting to the login page with error messsage in the URL
-          throw new Error('&email=' + credentials.email)
         }
       }
     }),
@@ -72,8 +111,9 @@ export default NextAuth({
       // console.log('token', token);
       // console.log('account', account);
       // console.log('user', user);
+      const now = Math.ceil(Date.now() / 1000);
 
-      if (account !== undefined) {
+      if (account) {
         if (account?.provider == 'facebook') {
           const res = await axios
             .post(API_ENDPOINT + '/auth/convert-token', {
@@ -86,6 +126,11 @@ export default NextAuth({
           token.provider = account?.provider
           token.accessToken = res.data.access_token
           token.refreshToken = res.data.refresh_token
+          token.scope = res.data.scope
+          token.token_expire = res.data.expires_in + now // This value have to be added to current date to get expires_in
+          token.token_type = res.data.token_type
+          console.log(res.data);
+          console.log('FACEBOOK ACCESS TOKEN ----> ' + JSON.stringify(res.data.access_token, null, 2));
         }
         if (account?.provider == 'credentials') {
           const UserCredentials: any = user.data
@@ -93,11 +138,16 @@ export default NextAuth({
           token.accessToken = UserCredentials.access_token
           token.refreshToken = UserCredentials.refresh_token
           token.scope = UserCredentials.scope
-          token.expires_in = UserCredentials.expires_in
+          token.token_expire = UserCredentials.expires_in + now// This value have to be added to current date to get expires_in
           token.token_type = UserCredentials.token_type
         }
       }
 
+      // console.log("146 - JWT", token);
+
+      if (now > token.token_expire) {
+        return refreshAccessToken(token)
+      }
       return token
     },
     /*
@@ -126,6 +176,7 @@ export default NextAuth({
       } catch (e) {
         console.log("error");
       }
+      // console.log("180 - Session", token);
 
       if (token.error) {
         session.error = token.error

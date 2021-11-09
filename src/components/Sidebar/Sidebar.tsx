@@ -94,7 +94,7 @@ export const Sidebar = () => {
 								</li>
 								<li>
 									<SidebarLink
-										href="/Historial"
+										href="/history"
 										exact
 										className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
 									>
