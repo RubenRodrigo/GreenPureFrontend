@@ -1,5 +1,5 @@
+import { Device } from '@/interfaces/Device';
 import { Line } from 'react-chartjs-2';
-import { Device } from 'src/interfaces/Device';
 
 // TODO: LineChart -> Eduardo
 interface Props {

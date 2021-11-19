@@ -69,14 +69,18 @@ export const axiosInstanceFetch = (session = null, timeout = 5000) => {
 		},
 		async function (error: AxiosError) {
 			const originalRequest = error.config;
-			console.log(error.response);
 
 			if (typeof error.response === 'undefined') {
-				alert(
-					'A server/network error occurred. ' +
-					'Looks like CORS might be the problem. ' +
-					'Sorry about this - we will get it fixed shortly.'
-				);
+				if (typeof window !== 'undefined') {
+
+					alert(
+						'A server/network error occurred. ' +
+						'Looks like CORS might be the problem. ' +
+						'Sorry about this - we will get it fixed shortly.'
+					);
+				} else {
+					console.log('Something went wrong...');
+				}
 				return Promise.reject(error);
 			}
 			if (

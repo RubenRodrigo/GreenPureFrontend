@@ -23,6 +23,9 @@
       "@/components/*": [
         "src/components/*"
       ],
+      "@/interfaces/*": [
+        "src/interfaces/*"
+      ],
       "@/public/*": [
         "public/*"
       ]

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { MdDeviceThermostat } from 'react-icons/md'
 import { axiosInstanceFetch, axiosInstanceServerSide } from 'src/helpers/axiosInstance'
 import { Device } from 'src/interfaces/Device'
+import { ColorContainer } from '../Cards/ColorContainer'
 
 interface Props {
 	searchButton: Boolean
@@ -45,26 +46,20 @@ const SearchResult = ({ searchButton }: Props) => {
 	return (
 		<div className="flex flex-col gap-5">
 			{state && state.map((item) => (
-				<div
-					key={item.id}
-					className="w-full px-4 py-1 border-l-8 border-textGreen flex bg-gradient-to-r from-green-50 to-white"
-				>
-					<MdDeviceThermostat className="block text-2xl self-center" />
-					<p className="font-medium text-lg self-center">Dispositivo {item.device} - {item.averages.quality__avg}%</p>
-				</div>
+				<ColorContainer quality={item.averages.quality__avg} key={item.id}>
+					<div
+						className="w-full px-4 py-1 flex"
+					>
+						<div className="flex-initial">
+							<MdDeviceThermostat className="block text-2xl self-center" />
+						</div>
+						<div className="flex-1 flex justify-between">
+							<p className="font-medium text-lg self-center">{item.device === null ? item.unique_id : item.device}</p>
+							<p>{item.averages.quality__avg === null ? 'Sin mediciones' : item.averages.quality__avg + '%'}</p>
+						</div>
+					</div>
+				</ColorContainer>
 			))}
-			{/* <div className="w-full px-4 py-1 border-l-8 border-yellow-500 flex bg-gradient-to-r from-yellow-50 to-white">
-				<MdDeviceThermostat className="block text-2xl self-center" />
-				<p className="font-medium text-lg self-center">Dispositivo 2 - 49%</p>
-			</div>
-			<div className="w-full px-4 py-1 border-l-8 border-textGreen flex bg-gradient-to-r from-green-50 to-white">
-				<MdDeviceThermostat className="block text-2xl self-center" />
-				<p className="font-medium text-lg self-center">Dispositivo 3 - 49%</p>
-			</div>
-			<div className="w-full px-4 py-1 border-l-8 border-yellow-500 flex bg-gradient-to-r from-yellow-50 to-white">
-				<MdDeviceThermostat className="block text-2xl self-center" />
-				<p className="font-medium text-lg self-center">Dispositivo 3 - 49%</p>
-			</div> */}
 		</div>
 	)
 }

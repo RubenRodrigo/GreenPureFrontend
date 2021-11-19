@@ -81,7 +81,7 @@ export const Sidebar = () => {
 								<li>
 									<SidebarLink
 										href="/devices"
-										exact
+										exact={false}
 										className="bg-opacity-40 text-gray-500 hover:bg-gray-100 w-full font-medium flex pl-10 py-4 gap-4"
 									>
 										<div className="self-center">
@@ -136,7 +136,11 @@ export const Sidebar = () => {
 							<p className="text-center">Nuevo Dispositivo</p>
 							<p className="text-sm text-gray-500 text-center">Puedes añadir nuevos dispositivos</p>
 						</div>
-						<button className="text-white bg-textGreen rounded-lg p-3 shadow-greenShadow font-semibold hover:bg-green-700">Añadir Dispositivo</button>
+						<Link href="/devices/new">
+							<a className="text-white bg-textGreen rounded-lg p-3 shadow-greenShadow font-semibold hover:bg-green-700 text-center">
+								Añadir Dispositivo
+							</a>
+						</Link>
 					</div>
 				</div>
 			</div>

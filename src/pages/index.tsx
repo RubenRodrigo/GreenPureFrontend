@@ -1,10 +1,7 @@
-import type { GetStaticProps, NextPage } from 'next'
-import { InferGetStaticPropsType } from 'next'
+import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getSession, signOut } from 'next-auth/react'
-import axios from 'axios'
 
 import styles from '../styles/Home.module.css'
 

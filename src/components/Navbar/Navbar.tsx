@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link';
-import { getSession, signOut, useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { Fragment } from 'react'
 
 import { Popover, Transition } from '@headlessui/react'
