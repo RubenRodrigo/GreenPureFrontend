@@ -8,18 +8,43 @@ interface Props {
 	selectDevice: (newDevice: Device) => void
 }
 
+function getCurrentDate(distance){
+
+	let newDate = new Date()
+	let date = newDate.getDate();
+	let month = newDate.getMonth() + 1;
+	let year = newDate.getFullYear();
+	let hour = newDate.getHours();
+	let time = newDate.getMinutes();
+	
+	return `${hour-distance}:00`
+}
+
 export const LinearChart = ({ devices, device, selectDevice }: Props) => {
+	console.log(devices)
+	var cont = 1;
+	var colors = ['rgba(253, 230, 138)','rgba(191, 219, 254)','rgba(254, 202, 202)','rgba(167, 243, 208)']
+	var chartsData = devices.map( function (value, index) {
+		var qualities = value.data_item.map( function(item) {
+			return item.quality
+		})
+		var indicators = value.data_item.map( function (item) {
+			let time = String(item.date_time).substring(11,19)
+			return time
+		})
+		return  {
+					label: 'Device ' + (index+1),
+					data: qualities,
+					fill: false,
+					backgroundColor: colors[index],
+					borderColor: colors[index],
+					labels: indicators
+				}
+	})
+	console.log(chartsData)
 	const data = {
-		labels: ['1', '2', '3', '4', '5', '6', '7'],
-		datasets: [
-			{
-				label: '# of Votes',
-				data: [12, 19, 3, 5, 2, 3],
-				fill: false,
-				backgroundColor: 'rgb(255, 99, 132)',
-				borderColor: 'rgba(255, 99, 132, 0.2)',
-			},
-		],
+		labels: chartsData[0].labels,
+		datasets: chartsData
 	};
 
 	const options = {
