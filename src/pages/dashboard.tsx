@@ -28,7 +28,7 @@ const Dashboard = ({ devices }: InferGetServerSidePropsType<typeof getServerSide
 								<FaTemperatureLow className="w-6 h-6 font-light" />
 							</div>
 						</div>
-						<p className="text-center text-4xl font-bold pb-2">{device.averages.quality__avg}</p>
+						<p className="text-center text-4xl font-bold pb-2">{device.averages.quality__avg?.toFixed(2)}</p>
 						<p className="text-center font-medium">Calidad Promedio</p>
 					</div>
 				</div>
@@ -39,7 +39,7 @@ const Dashboard = ({ devices }: InferGetServerSidePropsType<typeof getServerSide
 								<FaTemperatureLow className="w-6 h-6 font-light" />
 							</div>
 						</div>
-						<p className="text-center text-4xl font-bold pb-2">{device.averages.temperature__avg}ºC</p>
+						<p className="text-center text-4xl font-bold pb-2">{device.averages.temperature__avg?.toFixed(2)}ºC</p>
 						<p className="text-center font-medium">Temperatura promedio</p>
 					</div>
 				</div>
@@ -50,7 +50,7 @@ const Dashboard = ({ devices }: InferGetServerSidePropsType<typeof getServerSide
 								<FaTemperatureLow className="w-6 h-6 font-light" />
 							</div>
 						</div>
-						<p className="text-center text-4xl font-bold pb-2">{device.averages.humidity__avg}ºC</p>
+						<p className="text-center text-4xl font-bold pb-2">{device.averages.humidity__avg?.toFixed(2)}ºC</p>
 						<p className="text-center font-medium">Humedad promedio</p>
 					</div>
 				</div>
@@ -62,7 +62,7 @@ const Dashboard = ({ devices }: InferGetServerSidePropsType<typeof getServerSide
 								<FaTemperatureLow className="w-6 h-6 font-light" />
 							</div>
 						</div>
-						<p className="text-center text-4xl font-bold pb-2">{device.averages.concentration__avg}</p>
+						<p className="text-center text-4xl font-bold pb-2">{device.averages.concentration__avg?.toFixed(2)}</p>
 						<p className="text-center font-medium">Concentración de polvo promedio</p>
 					</div>
 				</div>
@@ -89,7 +89,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	if (!session || session.error) {
 		return {
 			redirect: {
-				destination: '/', // some destination '/dashboard' Ex,
+				destination: '/login', // some destination '/dashboard' Ex,
 				permanent: false,
 			},
 		}

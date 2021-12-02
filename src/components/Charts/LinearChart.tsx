@@ -8,7 +8,7 @@ interface Props {
 	selectDevice: (newDevice: Device) => void
 }
 
-function getCurrentDate(distance){
+function getCurrentDate(distance) {
 
 	let newDate = new Date()
 	let date = newDate.getDate();
@@ -16,48 +16,58 @@ function getCurrentDate(distance){
 	let year = newDate.getFullYear();
 	let hour = newDate.getHours();
 	let time = newDate.getMinutes();
-	
-	return `${hour-distance}:00`
+
+	return `${hour - distance}:00`
 }
 
 export const LinearChart = ({ devices, device, selectDevice }: Props) => {
 	console.log(devices)
 	var cont = 1;
-	var colors = ['rgba(253, 230, 138)','rgba(191, 219, 254)','rgba(254, 202, 202)','rgba(167, 243, 208)']
-	var chartsData = devices.map( function (value, index) {
-		var qualities = value.data_item.map( function(item) {
+	var colors = ['rgba(253, 230, 138)', 'rgba(191, 219, 254)', 'rgba(254, 202, 202)', 'rgba(167, 243, 208)']
+	var chartsData = devices.map(function (value, index) {
+		var qualities = value.data_item.map(function (item) {
 			return item.quality
 		})
-		var indicators = value.data_item.map( function (item) {
-			let time = String(item.date_time).substring(11,19)
+		var indicators = value.data_item.map(function (item) {
+			let time = String(item.date_time).substring(11, 19)
 			return time
 		})
-		return  {
-					label: 'Device ' + (index+1),
-					data: qualities,
-					fill: false,
-					backgroundColor: colors[index],
-					borderColor: colors[index],
-					labels: indicators
-				}
+		return {
+			label: 'Device ' + (index + 1),
+			data: qualities,
+			fill: false,
+			tension: 0.5,
+			backgroundColor: colors[index],
+			borderColor: colors[index],
+			labels: indicators,
+			customID: value.id
+		}
 	})
-	console.log(chartsData)
+
 	const data = {
 		labels: chartsData[0].labels,
 		datasets: chartsData
 	};
 
-	const options = {
-		scales: {
-			y: {
-				beginAtZero: true
-			}
-		}
-	};
+	const onClickLabel = (event, legendItem, legend) => {
+		const deviceId = legend.chart.data.datasets[legendItem.datasetIndex].customID
+		selectDevice(devices.find(item => item.id === deviceId))
+	}
 
 	return (
 		<>
-			<Line data={data} options={options} />
+			<Line data={data} options={{
+				scales: {
+					y: {
+						beginAtZero: true
+					}
+				},
+				plugins: {
+					legend: {
+						onClick: onClickLabel
+					}
+				}
+			}} />
 		</>
 	)
 }

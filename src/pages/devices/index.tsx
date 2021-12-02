@@ -6,6 +6,7 @@ import React, { ReactElement } from 'react'
 import { Device } from '@/interfaces/Device';
 import { axiosInstanceFetch } from 'src/helpers/axiosInstance';
 import { CircleColor } from '@/components/CircleColor';
+import { LinearChartCard } from '@/components/Charts/LinearChartCard';
 
 type PageProps = {
 	devices: Device[]
@@ -53,10 +54,10 @@ function Devices({ devices, }: InferGetServerSidePropsType<typeof getServerSideP
 							<Link href={`/devices/${device.id}`}>
 								<a>
 									<div className="text-center">
-										{device.id}
+										<LinearChartCard device={device} />
 									</div>
-									<div className="py-4 px-8">
-										<h3 className="py-4 font-medium">
+									<div className="px-8">
+										<h3 className="pb-4 font-medium">
 											{device.device === null ? device.unique_id : device.device}
 										</h3>
 										<div className="flex justify-between">

@@ -8,6 +8,8 @@ import { axiosInstanceFetch } from 'src/helpers/axiosInstance';
 import { MeasureCard } from '@/components/Cards/MeasureCard';
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { Dialog, Transition } from '@headlessui/react'
+import { LinearChartCard } from '@/components/Charts/LinearChartCard';
+import { LinearChartType } from '@/components/Charts/LinearChartType';
 
 type PageProps = {
 	data: Device | null
@@ -50,6 +52,15 @@ const Index = ({ data, error }: InferGetServerSidePropsType<typeof getServerSide
 	const [isOpen, setIsOpen] = useState(false)
 	const [device, setDevice] = useState(data)
 	const [deviceName, setDeviceName] = useState("")
+
+	const [labels, humidityDataset, temperatureDataset, warmDataset, concentrationDataset] = device.data_item.reduce(([a, b, c, d, e], { date_time, humidity, temperature, warm, concentration }) => {
+		a.push(date_time);
+		b.push(humidity);
+		c.push(temperature);
+		d.push(warm);
+		e.push(concentration);
+		return [a, b, c, d, e];
+	}, [[], [], [], [], []]);
 
 	function closeModal() {
 		setIsOpen(false)
@@ -159,8 +170,12 @@ const Index = ({ data, error }: InferGetServerSidePropsType<typeof getServerSide
 			</div>
 			<div className="grid grid-cols-2 gap-10">
 				<div className="col-span-1">
-					<div className="p-2 border rounded-lg h-96 mb-8">
-						<h3>Calidad</h3>
+					<div className="p-4 border rounded-lg mb-8 shadow-md">
+						<h3 className="text-xl font-medium">Calidad del Dispositivo</h3>
+						<span className="text-sm text-gray-500">({device.data_item[0]?.difference_quality}) que la última medición</span>
+						<div className="px-4">
+							<LinearChartCard device={device} />
+						</div>
 					</div>
 					<h3 className="font-medium text-lg">Últimos Registros</h3>
 					<hr className="mb-6 mt-2" />
@@ -176,11 +191,29 @@ const Index = ({ data, error }: InferGetServerSidePropsType<typeof getServerSide
 				</div>
 				<div className="col-span-1 flex flex-col justify-between">
 					<div className="flex-initial">
-						<div className="border rounded-lg h-32 mb-8">
+						<div className="border rounded-lg mb-8 p-4">
+							<h3 className="text-lg font-medium">Humedad</h3>
+							<div className="px-4">
+								<LinearChartType labels={labels} dataset={humidityDataset} type="Humedad" borderColor="#2243ff" backgroundColor="#2243ff3e" />
+							</div>
 						</div>
-						<div className="border rounded-lg h-32 mb-5">
+						<div className="border rounded-lg mb-8 p-4">
+							<h3 className="text-lg font-medium">Temperatura</h3>
+							<div className="px-4">
+								<LinearChartType labels={labels} dataset={temperatureDataset} type="Temperatura" borderColor="#ff9f22" backgroundColor="#ff9f2244" />
+							</div>
 						</div>
-						<div className="border rounded-lg h-32 mb-5">
+						<div className="border rounded-lg mb-8 p-4">
+							<h3 className="text-lg font-medium">Calor</h3>
+							<div className="px-4">
+								<LinearChartType labels={labels} dataset={warmDataset} type="Calor" borderColor="#fff022" backgroundColor="#fff02250" />
+							</div>
+						</div>
+						<div className="border rounded-lg mb-8 p-4">
+							<h3 className="text-lg font-medium">Concentración de Polvo</h3>
+							<div className="px-4">
+								<LinearChartType labels={labels} dataset={concentrationDataset} type="Concentración de Polvo" borderColor="#ff2222" backgroundColor="#ff222253" />
+							</div>
 						</div>
 					</div>
 					<div className="flex-initial">
