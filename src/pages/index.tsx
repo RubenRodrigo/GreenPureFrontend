@@ -64,8 +64,10 @@ const Home: NextPage = () => {
             className="z-30 flex flex-col items-center w-full max-w-xl pt-48 text-center lg:items-start lg:w-50 lg:pt-20 xl:pt-40 lg:text-left" style={{ marginLeft: "5%" }}>
             <h1 className="relative mb-4 text-3xl font-black leading-tight text-gray-900 sm:text-6xl xl:mb-8" style={styles.texto}>Mide la condición del aire y protege tus intereses</h1>
             <p className="pr-0 mb-8 text-base text-gray-600 sm:text-lg xl:text-xl lg:pr-50">Con Greenpure y la ayuda de nuestros dispositivos puede estar al tanto de las condiciones del aire a su alrededor, previniendolo de daños a la salud y situaciones comprometedoras.</p>
-            <a href="#_"
-              className="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-center font-bold text-white bg-gradient-to-r from-green-800 via-green-600 to-blue-700 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0 " style={styles.boton1} >IR A PANEL DE CONTROL</a>
+            <Link href="/dashboard">
+              <a
+                className="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-center font-bold text-white bg-gradient-to-r from-green-800 via-green-600 to-blue-700 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0 " style={styles.boton1} >IR A PANEL DE CONTROL</a>
+            </Link>
             <a href="#_"
               className="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-center font-bold text-white bg-gray-600 border-t border-gray-100 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0" style={styles.boton2}>CONTACTANOS</a>
           </div>
